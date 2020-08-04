@@ -1,0 +1,160 @@
+>>> qpt.jog_ccw(1,ccw_coord)
+Current Position => PAN: 181.14, TILT: 0.00, TIME: 1596256584.7546
+Current Position => PAN: -180.15, TILT: 0.00, TIME: 1596257087.2398
+angular velocity: 0.71901 degrees/sec, pan_speed:   1
+>>>
+>>> qpt.jog_cw(1,cw_coord)
+Current Position => PAN: -180.18, TILT: 0.00, TIME: 1596257127.6813
+Current Position => PAN: 180.16, TILT: 0.00, TIME: 1596257614.7574
+angular velocity: 0.73980 degrees/sec, pan_speed:   1
+>>>
+>>> qpt.jog_cw(10,cw_coord)
+Current Position => PAN: -181.50, TILT: 0.00, TIME: 1596252797.4397
+Current Position => PAN: 180.11, TILT: 0.00, TIME: 1596253309.0162
+angular velocity: 0.70685 degrees/sec, pan_speed:  10
+>>>
+>>> qpt.jog_ccw(10,ccw_coord)
+Current Position => PAN: 180.13, TILT: 0.00, TIME: 1596253369.6867
+Current Position => PAN: -180.14, TILT: 0.00, TIME: 1596253859.1697
+angular velocity: 0.73602 degrees/sec, pan_speed:  10
+>>>
+>>> qpt.jog_cw(20,cw_coord)
+Current Position => PAN: -180.16, TILT: 0.00, TIME: 1596253873.8542
+Current Position => PAN: 180.29, TILT: 0.00, TIME: 1596254174.0091
+angular velocity: 1.20088 degrees/sec, pan_speed:  20
+>>>
+>>> qpt.jog_ccw(20,ccw_coord)
+Current Position => PAN: 180.32, TILT: 0.00, TIME: 1596254184.2942
+Current Position => PAN: -180.18, TILT: 0.00, TIME: 1596254483.0471
+angular velocity: 1.20668 degrees/sec, pan_speed:  20
+>>>
+>>> qpt.jog_cw(30,cw_coord)
+Current Position => PAN: -180.22, TILT: 0.00, TIME: 1596254508.5658
+Current Position => PAN: 180.40, TILT: 0.00, TIME: 1596254687.5318
+angular velocity: 2.01502 degrees/sec, pan_speed:  30
+>>>
+>>> qpt.jog_ccw(30,ccw_coord)
+Current Position => PAN: 180.46, TILT: 0.00, TIME: 1596254966.4366
+Current Position => PAN: -180.38, TILT: 0.00, TIME: 1596255145.4787
+angular velocity: 2.01539 degrees/sec, pan_speed:  30
+>>>
+>>> qpt.jog_cw(40,cw_coord)
+Current Position => PAN: -180.44, TILT: 0.00, TIME: 1596255417.5886
+Current Position => PAN: 180.39, TILT: 0.00, TIME: 1596255545.9409
+angular velocity: 2.81125 degrees/sec, pan_speed:  40
+>>>
+>>> qpt.jog_ccw(40,ccw_coord)
+Current Position => PAN: 180.45, TILT: 0.00, TIME: 1596255558.5882
+Current Position => PAN: -180.58, TILT: 0.00, TIME: 1596255686.7674
+angular velocity: 2.81661 degrees/sec, pan_speed:  40
+>>>
+>>> qpt.jog_ccw(50,ccw_coord)
+Current Position => PAN: 182.38, TILT: 0.00, TIME: 1596250914.9535
+Current Position => PAN: -180.54, TILT: 0.00, TIME: 1596251015.4595
+angular velocity: 3.61093 degrees/sec, pan_speed:  50
+>>>
+>>> qpt.jog_cw(50,cw_coord)
+Current Position => PAN: -180.65, TILT: 0.00, TIME: 1596251251.1536
+Current Position => PAN: 180.56, TILT: 0.00, TIME: 1596251351.0216
+angular velocity: 3.61687 degrees/sec, pan_speed:  50
+>>>
+>>> qpt.jog_cw(60,cw_coord)
+Current Position => PAN: -180.67, TILT: 0.00, TIME: 1596255720.6273
+Current Position => PAN: 180.96, TILT: 0.00, TIME: 1596255803.0865
+angular velocity: 4.38556 degrees/sec, pan_speed:  60
+>>>
+>>> qpt.jog_ccw(60,ccw_coord)
+Current Position => PAN: 181.07, TILT: 0.00, TIME: 1596255816.3479
+Current Position => PAN: -181.00, TILT: 0.00, TIME: 1596255898.8478
+angular velocity: 4.38873 degrees/sec, pan_speed:  60
+>>>
+>>> qpt.jog_cw(70,cw_coord)
+Current Position => PAN: -181.11, TILT: 0.00, TIME: 1596255909.2605
+Current Position => PAN: 181.14, TILT: 0.00, TIME: 1596255979.0096
+angular velocity: 5.19362 degrees/sec, pan_speed:  70
+>>>
+>>> qpt.jog_ccw(70,ccw_coord)
+Current Position => PAN: 181.25, TILT: 0.00, TIME: 1596256002.4994
+Current Position => PAN: -181.23, TILT: 0.00, TIME: 1596256072.6623
+angular velocity: 5.16626 degrees/sec, pan_speed:  70
+>>>
+>>> qpt.jog_ccw(80,ccw_coord)
+Current Position => PAN: 180.65, TILT: 0.00, TIME: 1596251370.5686
+Current Position => PAN: -181.09, TILT: 0.00, TIME: 1596251431.2823
+angular velocity: 5.95813 degrees/sec, pan_speed:  80
+>>>
+>>> qpt.jog_cw(80,cw_coord)
+Current Position => PAN: -181.26, TILT: 0.00, TIME: 1596251479.5776
+Current Position => PAN: 180.99, TILT: 0.00, TIME: 1596251540.1374
+angular velocity: 5.98169 degrees/sec, pan_speed:  80
+>>>
+>>> qpt.jog_ccw(90,ccw_coord)
+Current Position => PAN: 181.15, TILT: 0.00, TIME: 1596251582.6407
+Current Position => PAN: -181.60, TILT: 0.00, TIME: 1596251636.3165
+angular velocity: 6.75816 degrees/sec, pan_speed:  90
+>>>
+>>> qpt.jog_cw(90,cw_coord)
+Current Position => PAN: -181.78, TILT: 0.00, TIME: 1596251646.3765
+Current Position => PAN: 181.44, TILT: 0.00, TIME: 1596251700.0443
+angular velocity: 6.76793 degrees/sec, pan_speed:  90
+>>>
+>>> qpt.jog_ccw(100,ccw_coord)
+Current Position => PAN: 181.63, TILT: 0.00, TIME: 1596251736.2331
+Current Position => PAN: -181.54, TILT: 0.00, TIME: 1596251784.5036
+angular velocity: 7.52370 degrees/sec, pan_speed: 100
+>>>
+>>> qpt.jog_cw(100,cw_coord)
+Current Position => PAN: -181.37, TILT: 0.00, TIME: 1596256441.9874
+Current Position => PAN: 180.93, TILT: 0.00, TIME: 1596256489.8733
+angular velocity: 7.56590 degrees/sec, pan_speed: 100
+>>>
+>>> qpt.jog_cw(110,cw_coord)
+Current Position => PAN: -181.70, TILT: 0.00, TIME: 1596251796.4253
+Current Position => PAN: 181.50, TILT: 0.00, TIME: 1596251840.0553
+angular velocity: 8.32454 degrees/sec, pan_speed: 110
+>>>
+>>> qpt.jog_ccw(110,ccw_coord)
+Current Position => PAN: 181.70, TILT: 0.00, TIME: 1596251853.5923
+Current Position => PAN: -181.45, TILT: 0.00, TIME: 1596251897.3297
+angular velocity: 8.30311 degrees/sec, pan_speed: 110
+>>>
+>>> qpt.jog_cw(120,cw_coord)
+Current Position => PAN: -181.68, TILT: 0.00, TIME: 1596251929.5542
+Current Position => PAN: 182.16, TILT: 0.00, TIME: 1596251969.3863
+angular velocity: 9.13440 degrees/sec, pan_speed: 120
+>>>
+>>> qpt.jog_ccw(120,ccw_coord)
+Current Position => PAN: 182.43, TILT: 0.00, TIME: 1596251977.8085
+Current Position => PAN: -182.15, TILT: 0.00, TIME: 1596252018.0201
+angular velocity: 9.06652 degrees/sec, pan_speed: 120
+>>>
+>>> qpt.jog_cw(125,cw_coord)
+Current Position => PAN: -182.13, TILT: 0.00, TIME: 1596250753.9942
+Current Position => PAN: 182.04, TILT: 0.00, TIME: 1596250792.3186
+angular velocity: 9.50232 degrees/sec, pan_speed: 125
+>>>
+>>> qpt.jog_ccw(125,ccw_coord)
+Current Position => PAN: 182.23, TILT: 0.00, TIME: 1596250810.1863
+Current Position => PAN: -182.08, TILT: 0.00, TIME: 1596250848.7548
+angular velocity: 9.44580 degrees/sec, pan_speed: 125
+>>>
+>>> qpt.jog_cw(126,cw_coord)
+Current Position => PAN: -182.13, TILT: 0.00, TIME: 1596250642.0654
+Current Position => PAN: 182.15, TILT: 0.00, TIME: 1596250680.0096
+angular velocity: 9.60042 degrees/sec, pan_speed: 126
+>>>
+>>> qpt.jog_ccw(126,ccw_coord)
+Current Position => PAN: 182.41, TILT: 0.00, TIME: 1596250693.8821
+Current Position => PAN: -181.90, TILT: 0.00, TIME: 1596250732.0696
+angular velocity: 9.54002 degrees/sec, pan_speed: 126
+>>>
+>>> qpt.jog_cw(127,cw_coord)
+Current Position => PAN: -182.35, TILT: 0.00, TIME: 1596252028.4087
+Current Position => PAN: 181.23, TILT: 0.00, TIME: 1596252065.9844
+angular velocity: 9.67593 degrees/sec, pan_speed: 127
+>>>
+>>> qpt.jog_ccw(127,ccw_coord)
+Current Position => PAN: 181.51, TILT: 0.00, TIME: 1596252089.0249
+Current Position => PAN: -181.27, TILT: 0.00, TIME: 1596252126.7087
+angular velocity: 9.62693 degrees/sec, pan_speed: 127
+
