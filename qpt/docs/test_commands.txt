@@ -1,0 +1,9 @@
+Setup Command
+**********************************************************************
+
+import importlib; import sys; sys.path.append("C:\\Users\\Thomas\\Desktop\\qpt"); import qpt_ints as qi; import packet as pkt; import positioner as pos;from packet_parser import Parser; qpt = pos.Positioner(); p = Parser(); cw = qi.Coordinate(180,0); ccw = qi.Coordinate(-180,0)
+
+
+import importlib; import sys; sys.path.append("D:\\Desktop\\qpt"); import qpt_ints as qi; import packet as pkt; import positioner as pos;from packet_parser import Parser; qpt = pos.Positioner(); p = Parser(); cw = qi.Coordinate(10,0); ccw = qi.Coordinate(-10,0); up = qi.Coordinate(0,10); down = qi.Coordinate(0,0)
+
+

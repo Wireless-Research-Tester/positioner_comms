@@ -1,0 +1,169 @@
+Python 3.8.2 (tags/v3.8.2:7b3ab59, Feb 25 2020, 22:45:29) [MSC v.1916 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+>>> import importlib; import sys; sys.path.append("D:\\Desktop\\qpt"); import qpt_ints as qi; import packet as pkt; import positioner as pos;from packet_parser import Parser; qpt = pos.Positioner(); p = Parser(); cw = qi.Coordinate(10,0); ccw = qi.Coordinate(-10,0); up = qi.Coordinate(0,10); down = qi.Coordinate(0,0)
+Current Position => PAN: 0.00, TILT: -0.86, TIME: 1597436266.2118
+>>>
+>>>
+>>> qpt.jog_up(127, up)
+Current Position => PAN: 0.00, TILT: -0.86, TIME: 1597436277.8804
+Current Position => PAN: 0.00, TILT: 10.70, TIME: 1597436281.7162
+angular velocity: 3.01371 degrees/sec, tilt_speed: 127
+>>>
+>>> qpt.jog_down(127, down)
+Current Position => PAN: 0.00, TILT: 10.77, TIME: 1597436306.8641
+Current Position => PAN: 0.00, TILT: -0.68, TIME: 1597436310.6309
+angular velocity: 3.03971 degrees/sec, tilt_speed: 127
+>>>
+>>>
+>>> qpt.jog_up(120, up)
+Current Position => PAN: 0.00, TILT: -0.75, TIME: 1597436323.5203
+Current Position => PAN: 0.00, TILT: 10.70, TIME: 1597436327.5384
+angular velocity: 2.84963 degrees/sec, tilt_speed: 120
+>>>
+>>> qpt.jog_down(120, down)
+Current Position => PAN: 0.00, TILT: 10.76, TIME: 1597436341.5284
+Current Position => PAN: 0.00, TILT: -0.43, TIME: 1597436345.4354
+angular velocity: 2.86407 degrees/sec, tilt_speed: 120
+>>>
+>>>
+>>> qpt.jog_up(110, up)
+Current Position => PAN: 0.00, TILT: -0.50, TIME: 1597436359.5689
+Current Position => PAN: 0.00, TILT: 10.68, TIME: 1597436363.8697
+angular velocity: 2.59953 degrees/sec, tilt_speed: 110
+>>>
+>>> qpt.jog_down(110, down)
+Current Position => PAN: 0.00, TILT: 10.75, TIME: 1597436371.0172
+Current Position => PAN: 0.00, TILT: -0.63, TIME: 1597436375.3458
+angular velocity: 2.62902 degrees/sec, tilt_speed: 110
+>>>
+>>>
+>>> qpt.jog_up(100, up)
+Current Position => PAN: 0.00, TILT: -0.69, TIME: 1597436389.7445
+Current Position => PAN: 0.00, TILT: 10.47, TIME: 1597436394.4995
+angular velocity: 2.34701 degrees/sec, tilt_speed: 100
+>>>
+>>> qpt.jog_down(100, down)
+Current Position => PAN: 0.00, TILT: 10.55, TIME: 1597436402.1522
+Current Position => PAN: 0.00, TILT: -0.37, TIME: 1597436406.7497
+angular velocity: 2.37523 degrees/sec, tilt_speed: 100
+>>>
+>>>
+>>> qpt.jog_up(90, up)
+Current Position => PAN: 0.00, TILT: -0.42, TIME: 1597436418.1690
+Current Position => PAN: 0.00, TILT: 10.44, TIME: 1597436423.3385
+angular velocity: 2.10080 degrees/sec, tilt_speed:  90
+>>>
+>>> qpt.jog_down(90, down)
+Current Position => PAN: 0.00, TILT: 10.49, TIME: 1597436436.0484
+Current Position => PAN: 0.00, TILT: -0.46, TIME: 1597436441.2044
+angular velocity: 2.12416 degrees/sec, tilt_speed:  90
+>>>
+>>>
+>>> qpt.jog_up(80, up)
+Current Position => PAN: 0.00, TILT: -0.51, TIME: 1597436467.9847
+Current Position => PAN: 0.00, TILT: 10.50, TIME: 1597436473.9558
+angular velocity: 1.84387 degrees/sec, tilt_speed:  80
+>>>
+>>> qpt.jog_down(80, down)
+Current Position => PAN: 0.00, TILT: 10.55, TIME: 1597436481.1450
+Current Position => PAN: 0.00, TILT: -0.34, TIME: 1597436486.9674
+angular velocity: 1.87038 degrees/sec, tilt_speed:  80
+>>>
+>>>
+>>> qpt.jog_up(70, up)
+Current Position => PAN: 0.00, TILT: -0.38, TIME: 1597436497.3279
+Current Position => PAN: 0.00, TILT: 10.47, TIME: 1597436504.1314
+angular velocity: 1.59500 degrees/sec, tilt_speed:  70
+>>>
+>>> qpt.jog_down(70, down)
+Current Position => PAN: 0.00, TILT: 10.51, TIME: 1597436513.5451
+Current Position => PAN: 0.00, TILT: -0.30, TIME: 1597436520.2202
+angular velocity: 1.61947 degrees/sec, tilt_speed:  70
+>>>
+>>>
+>>> qpt.jog_up(60, up)
+Current Position => PAN: 0.00, TILT: -0.34, TIME: 1597436532.7201
+Current Position => PAN: 0.00, TILT: 10.34, TIME: 1597436540.6988
+angular velocity: 1.33856 degrees/sec, tilt_speed:  60
+>>>
+>>> qpt.jog_down(60, down)
+Current Position => PAN: 0.00, TILT: 10.38, TIME: 1597436549.3680
+Current Position => PAN: 0.00, TILT: -0.21, TIME: 1597436557.1364
+angular velocity: 1.36321 degrees/sec, tilt_speed:  60
+>>>
+>>>
+>>> qpt.jog_up(50, up)
+Current Position => PAN: 0.00, TILT: -0.25, TIME: 1597436600.9687
+Current Position => PAN: 0.00, TILT: 10.31, TIME: 1597436610.6730
+angular velocity: 1.08818 degrees/sec, tilt_speed:  50
+>>>
+>>> qpt.jog_down(50, down)
+Current Position => PAN: 0.00, TILT: 10.34, TIME: 1597436619.0487
+Current Position => PAN: 0.00, TILT: -0.19, TIME: 1597436628.5272
+angular velocity: 1.11094 degrees/sec, tilt_speed:  50
+>>>
+>>>
+>>> qpt.jog_up(40, up)
+Current Position => PAN: 0.00, TILT: -0.21, TIME: 1597436653.9609
+Current Position => PAN: 0.00, TILT: 10.22, TIME: 1597436666.5562
+angular velocity: 0.82809 degrees/sec, tilt_speed:  40
+>>>
+>>> qpt.jog_down(40, down)
+Current Position => PAN: 0.00, TILT: 10.25, TIME: 1597436678.9208
+Current Position => PAN: 0.00, TILT: -0.18, TIME: 1597436691.1684
+angular velocity: 0.85160 degrees/sec, tilt_speed:  40
+>>>
+>>>
+>>> qpt.jog_up(30, up)
+Current Position => PAN: 0.00, TILT: -0.21, TIME: 1597436700.8890
+Current Position => PAN: 0.00, TILT: 10.12, TIME: 1597436719.1394
+angular velocity: 0.56601 degrees/sec, tilt_speed:  30
+>>>
+>>> qpt.jog_down(30, down)
+Current Position => PAN: 0.00, TILT: 10.15, TIME: 1597436729.4094
+Current Position => PAN: 0.00, TILT: -0.09, TIME: 1597436746.6399
+angular velocity: 0.59429 degrees/sec, tilt_speed:  30
+>>>
+>>>
+>>> qpt.jog_up(20, up)
+Current Position => PAN: 0.00, TILT: -0.11, TIME: 1597436764.1923
+Current Position => PAN: 0.00, TILT: 10.06, TIME: 1597436798.9801
+angular velocity: 0.29234 degrees/sec, tilt_speed:  20
+>>>
+>>> qpt.jog_down(20, down)
+Current Position => PAN: 0.00, TILT: 10.08, TIME: 1597436817.9373
+Current Position => PAN: 0.00, TILT: -0.05, TIME: 1597436848.5335
+angular velocity: 0.33109 degrees/sec, tilt_speed:  20
+>>>
+>>>
+>>> qpt.jog_up(19, up)
+Current Position => PAN: 0.00, TILT: -0.01, TIME: 1597437025.3361
+Current Position => PAN: 0.00, TILT: 10.07, TIME: 1597437065.4070
+angular velocity: 0.25155 degrees/sec, tilt_speed:  19
+>>>
+>>> qpt.jog_down(19, down)
+Current Position => PAN: 0.00, TILT: 10.09, TIME: 1597437132.6732
+Current Position => PAN: 0.00, TILT: -0.03, TIME: 1597437167.2489
+angular velocity: 0.29269 degrees/sec, tilt_speed:  19
+>>>
+>>>
+>>> qpt.jog_up(17, up)
+Current Position => PAN: 0.00, TILT: -0.04, TIME: 1597437237.1199
+Current Position => PAN: 0.00, TILT: 10.05, TIME: 1597437289.8131
+angular velocity: 0.19149 degrees/sec, tilt_speed:  17
+>>>
+>>> qpt.jog_down(17, down)
+Current Position => PAN: 0.00, TILT: 10.06, TIME: 1597437328.4008
+Current Position => PAN: 0.00, TILT: -0.03, TIME: 1597437369.9585
+angular velocity: 0.24280 degrees/sec, tilt_speed:  17
+>>>
+
+
+
+
+
+
+
+
+
