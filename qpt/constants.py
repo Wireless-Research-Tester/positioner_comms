@@ -16,6 +16,7 @@
 ################################################################################
 import enum
 
+
 # Control Chars
 CTRL = {
     'STX' : b'\x02', # Start-of-Text Char
@@ -23,12 +24,6 @@ CTRL = {
     'ACK' : b'\x06', # Acknowledged Char
     'NAK' : b'\x15', # Not-Acknowledged Char
 }
-
-
-# Escape Char
-ESC = [
-    b'\x1b', # Used to escape a data or LRC byte that matches a control char
-]
 
 
 # Positioner Commands 
@@ -53,8 +48,27 @@ CMD = {
 }
 
 
-# Mask used to set and clear bit 7 in data or LRC bytes that match control chars
-ESC_MASK = int.from_bytes(b'\x80', byteorder='little')
+# Static Transmission Packets
+STATIC_TX = {
+    'GET_STATUS'             : b'\x02\x31\x00\x00\x00\x00\x00\x31\x03',
+    'STOP'                   : b'\x02\x31\x1b\x82\x00\x00\x00\x00\x33\x03',
+    'FAULT_RESET'            : b'\x02\x31\x01\x00\x00\x00\x00\x30\x03',
+    'MOVE_TO_ABSOLUTE_ZERO'  : b'\x02\x35\x35\x03',
+    'GET_ANGLE_CORRECTION'   : b'\x02\x70\x70\x03',
+    'ALIGN_ANGLES_TO_CENTER' : b'\x02\x82\x82\x03',
+    'CLEAR_ANGLE_CORRECTION' : b'\x02\x84\x84\x03',
+    'SET_CENTER_POSITION'    : b'\x02\x91\x91\x03',
+    'GET_MINIMUM_SPEEDS'     : b'\x02\x92\x92\x03',
+    'GET_MAXIMUM_SPEEDS'     : b'\x02\x98\x98\x03',
+}
+
+
+# Escape Character and Escape Mask
+ESC =  b'\x1b' # Used to escape a data or LRC byte that matches a control char
+ESC_MASK = int.from_bytes(b'\x80', byteorder='little') # Bitmask used to set and clear bit 7 in data or LRC bytes that match control chars
+
+
+# Bitmasks used to set and clear bits in data or control bytes
 BIT0 = int.from_bytes(b'\x01', byteorder='little')
 BIT1 = int.from_bytes(b'\x02', byteorder='little')
 BIT2 = int.from_bytes(b'\x04', byteorder='little')

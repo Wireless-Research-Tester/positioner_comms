@@ -22,8 +22,11 @@
 #  Built with Python Version: 3.8.2
 #
 ################################################################################
-import integer as qi
-import constants as Constants
+import qpt_ints as qi
+from constants import CTRL, ESC, ESC_MASK, STATIC_TX
+
+
+ctrl_chars = CTRL.values()
 
 
 def generate_LRC(data):
@@ -62,12 +65,12 @@ def insert_esc(data):
     returns: Packet that is ready to transmit once STX and ETX are added.
     """
     tx_packet = bytes()
-    ctrl = Constants.CTRL.values()
+    # ctrl = CTRL.values()
     for item in data:
         val = item.to_bytes(1, byteorder='little')
-        if val in ctrl or val in Constants.ESC:
+        if val in ctrl_chars or val == ESC:
             tx_packet += b'\x1b'
-            tx_packet += (item | Constants.ESC_MASK).to_bytes(1, byteorder='little')
+            tx_packet += (item | ESC_MASK).to_bytes(1, byteorder='little')
         else:
             tx_packet += val
     return tx_packet
@@ -87,11 +90,11 @@ def strip_esc(data):
     include_next = False
     for i in range(len(rx)):
         val = rx[i].to_bytes(1, byteorder='little')
-        if val not in Constants.ESC or include_next is True:
+        if val != ESC or include_next is True:
             rx_packet += val
             include_next = False
         else:
-            rx[i+1] = (rx[i+1] & (~Constants.ESC_MASK))
+            rx[i+1] = (rx[i+1] & (~ESC_MASK))
             include_next = True
     return rx_packet
 
@@ -102,14 +105,16 @@ def get_status():
 
     return: Packet that is ready to transmit.
     """
-    return bytes.fromhex('02 31 00 00 00 00 00 31 03') 
+    # return bytes.fromhex('02 31 00 00 00 00 00 31 03')
+    return STATIC_TX['GET_STATUS']
 
 
 def jog_positioner(
         pan_speed,
         pan_dir,
         tilt_speed,
-        tilt_dir):
+        tilt_dir,
+        override_soft_limit=False):
     """Command 0x31: "Get Status/Jog"
     Creates packet to jog the QPT positioner in pan_dir and tilt_dir 
     at pan_speed and tilt_speed.
@@ -118,14 +123,24 @@ def jog_positioner(
     pan_dir: 1 for CW, 0 for CCW
     tilt_speed: must be between 0-127. Speed of 0 means no movement.
     tilt_dir: 1 for UP, 0 for DOWN
+    override_soft_limit: kwarg default is False, passing in a value of True
+      for the kwarg will allow for the overriding of soft limits during a jog.
+      THIS SHOULD ONLY BE SET WHEN INITIALLY SETTING UP THE SOFT LIMITS. Its
+      current setting will be returned in the OSLR bit.
     returns: Packet that is ready to transmit.
+
+    NOTE: Client should observe the angular readings during jog to confirm
+      the motors are moving the proper direction and are not stalled.
 
     TODO: Add tests to test_packet.py, and verify it functions correctly.
     """
     if pan_speed >= 0 and pan_speed <= 127 and tilt_speed >= 0 and tilt_speed <= 127:
         pan = qi.Integer((pan_speed<<1) | pan_dir).lower_byte()
         tilt = qi.Integer((tilt_speed<<1) | tilt_dir).lower_byte()
-        tx_data = bytes(b'\x31' + b'\x00' + pan + tilt + b'\x00\x00')
+        if override_soft_limit is True:
+            tx_data = bytes(b'\x31' + b'\x04' + pan + tilt + b'\x00\x00')
+        else:
+            tx_data = bytes(b'\x31' + b'\x00' + pan + tilt + b'\x00\x00')
         LRC = generate_LRC(tx_data)
         return bytes(b'\x02' + insert_esc(tx_data + LRC) + b'\x03')
     return None
@@ -137,7 +152,35 @@ def stop():
 
     returns: Packet that is ready to transmit.
     """
-    return bytes.fromhex('02 31 1b 82 00 00 00 00 33 03')
+    # return bytes.fromhex('02 31 1b 82 00 00 00 00 33 03')
+    return STATIC_TX['STOP']
+
+
+def fault_reset():
+    """Command 0x31: "Get Status/Jog"
+    Creates packet to reset latching faults, which are the hard faults:
+        Timeout (TO): A commanded axis has not moved within the prescribed timeframe
+        Direction Error (DE): A commanded axis has moved in the wrong direction.
+        Current Overload (OL): A commanded axis has tripped the current overload.
+
+    A timeout fault will be set if an axis fails to move witin 1 second,
+      which may be the result of a stalled motor, an overloaded platform,
+      or a physical obstruction prohibiting motor movement.
+    A directional error fault will be set if an axis is detected as moving
+      in the wrong direction. This may be the result of improper motor wiring.
+    
+    NOTE: The TO and DE faults will only occur during automated moves
+      - 'Move_To_Coords' 0x33
+      - 'Move_To_Delta'  0x34
+      - 'Move_To_Zero'   0x35
+
+    If a motor either has its current draw exceed the allowable value, or
+      if its junction temperature exceeds 145 degrees C, an overload fault
+      will be set.
+
+    returns: Packet that is ready to transmit.
+    """
+    return STATIC_TX['FAULT_RESET']
 
 
 def move_to_entered_coords(coord):
@@ -170,7 +213,8 @@ def move_to_absolute_zero():
 
     returns: Packet that is ready to transmit.
     """
-    return bytes.fromhex('02 35 35 03')
+    # return bytes.fromhex('02 35 35 03')
+    return STATIC_TX['MOVE_TO_ABSOLUTE_ZERO']
 
 
 def get_angle_correction():
@@ -179,7 +223,8 @@ def get_angle_correction():
 
     returns: Packet that is ready to transmit.
     """
-    return bytes.fromhex('02 70 70 03')
+    # return bytes.fromhex('02 70 70 03')
+    return STATIC_TX['GET_ANGLE_CORRECTION']
 
 
 def get_soft_limit(axis):
@@ -250,7 +295,8 @@ def align_angles_to_center():
 
     returns: Packet that is ready to transmit.
     """
-    return bytes.fromhex('02 82 82 03')
+    # return bytes.fromhex('02 82 82 03')
+    return STATIC_TX['ALIGN_ANGLES_TO_CENTER']
 
 
 def clear_angle_correction():
@@ -260,7 +306,8 @@ def clear_angle_correction():
 
     returns: Packet that is ready to transmit.
     """
-    return bytes.fromhex('02 84 84 03')
+    # return bytes.fromhex('02 84 84 03')
+    return STATIC_TX['CLEAR_ANGLE_CORRECTION']
 
 
 def get_center_position_in_RUs():
@@ -278,7 +325,8 @@ def set_center_position():
 
     returns: Packet that is ready to transmit.
     """
-    return bytes.fromhex('02 91 91 03')
+    # return bytes.fromhex('02 91 91 03')
+    return STATIC_TX['SET_CENTER_POSITION']
 
 
 def get_minimum_speeds():
@@ -288,7 +336,8 @@ def get_minimum_speeds():
 
     returns: Packet that is ready to transmit.
     """
-    return bytes.fromhex('02 92 92 03')
+    # return bytes.fromhex('02 92 92 03')
+    return STATIC_TX['GET_MINIMUM_SPEEDS']
 
 
 def set_minimum_speeds(pan_speed, tilt_speed):
@@ -340,7 +389,8 @@ def get_maximum_speeds():
 
     returns: Packet that is ready to transmit.
     """
-    return bytes.fromhex('02 98 98 03')
+    # return bytes.fromhex('02 98 98 03')
+    return STATIC_TX['GET_MAXIMUM_SPEEDS']
 
 
 def set_maximum_speeds(pan_speed, tilt_speed):

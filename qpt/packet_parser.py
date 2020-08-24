@@ -1,26 +1,56 @@
 ################################################################################
 #
+#  Description:
+#      This file contains the implementation of a class for parsing packets
+#      returned by the QPT Positioner, and updating QPT status & error
+#      fields in response to the both the type of return packet, and
+#      the data returned by the QPT in said packet.
 #
+#  Status:
+#
+#
+#  Dependencies:
+#      PyVISA Version: 1.10.1
+#
+#  Author: Thomas Hoover
+#  Date: 20200806
+#  Built with Python Version: 3.8.5
 #
 ################################################################################
+from time import time, sleep
+import qpt_ints as qi
 import packet as pkt
-import integer as qi
 from constants import BIT0, BIT1, BIT2, BIT3, BIT4, BIT5, BIT6, BIT7
 
-class Packet_Parser:
-    def __init__(self):
-        self.ack = 0
-        self.cmd = 1
-        self.data_start = 2
-        self.data_end = -2
-        self.checksum = -2
-        self.eot = -1
 
-    def validate_LRC(self, rx):
-        return pkt.valid_LRC(rx[self.data_start:self.eot])   
+class Parser:
+    def __init__(self):
+        self.active = True 
+
+    def parse(self, rx, qpt):
+        if rx is not None:
+            rx = bytes(pkt.strip_esc(rx))
+            cmd = rx[1]
+
+            if pkt.valid_LRC(rx[1:-1]) is True:
+                if is_move_cmd(cmd):
+                    self.update_qpt_status(rx, qpt)
+                elif is_angle_correction_cmd(cmd):
+                    self.update_angle_corrections(rx, qpt)
+                elif is_soft_limits_cmd(cmd):
+                    self.update_soft_limits(rx, qpt)
+                elif is_potentiometer_center_cmd(cmd):
+                    self.update_potentiometer_center(rx, qpt)
+                elif is_min_speed_cmd(cmd):
+                    self.update_min_speed(rx, qpt)
+                elif is_max_speed_cmd(cmd):
+                    self.update_max_speed(rx, qpt)
+                elif is_comm_timeout_cmd(cmd):
+                    self.update_comm_timeout(rx, qpt)
 
     def update_curr_position(self, rx, qpt):
-        qpt.curr_position = qi.Coordinate(rx[2:4], rx[4:6], fromqpt=True)
+        with qpt.curr_lock:
+            qpt.curr_position = qi.Coordinate(rx[2:4], rx[4:6], fromqpt=True)
 
     def update_pan_status(self, rx, qpt):
         qpt.sfault_cs_soft_limit = bool(rx[6] & BIT7)
@@ -67,14 +97,14 @@ class Packet_Parser:
                 qpt.pan_ccw_soft_limit = limit
         elif rx[2] == 2 or rx[2] == 3:
             limit = qi.Coordinate(0, rx[3:5], fromqpt=True).tilt_angle()
-            if axis == 2:
+            if rx[2] == 2:
                 qpt.tilt_up_soft_limit = limit
-            elif axis == 3:
+            elif rx[2] == 3:
                 qpt.tilt_down_soft_limit = limit
 
     def update_potentiometer_center(self, rx, qpt):
-        qpt.pan_center_RU = rx[2:4].from_bytes(2, byteorder='little', signed=True)
-        qpt.tilt_center_RU = rx[4:6].from_bytes(2, byteorder='little', signed=True)
+        qpt.pan_center_RU = int.from_bytes(rx[2:4], byteorder='little', signed=True)
+        qpt.tilt_center_RU = int.from_bytes(rx[4:6], byteorder='little', signed=True)
 
     def update_min_speed(self, rx, qpt):
         qpt.pan_min_speed = rx[2]
@@ -88,69 +118,43 @@ class Packet_Parser:
         qpt.angle_corrections = qi.Coordinate(rx[2:4], rx[4:6], fromqpt=True)
 
     def update_comm_timeout(self, rx, qpt):
-        qpt.comms_timeout = rx[2]
-
-    def is_move_cmd(self, cmd):
-        if cmd == 0x31 or cmd == 0x33 or cmd == 0x34 or cmd == 0x35:
-            return True
-        return False
-
-    def is_angle_correction_cmd(self, cmd):
-        if cmd == 0x70 or cmd == 0x80 or cmd == 0x82 or cmd == 0x84:
-            return True
-        return False
-
-    def is_soft_limits_cmd(self, cmd):
-        if cmd == 0x71 or cmd == 0x81:
-            return True
-        return False
-
-    def is_potentiometer_center_cmd(self, cmd):
-        if cmd == 0x90 or cmd == 0x91:
-            return True
-        return False
-
-    def is_min_speed_cmd(self, cmd):
-        if cmd == 0x92 or cmd == 0x93:
-            return True
-        return False
-
-    def is_max_speed_cmd(self, cmd):
-        if cmd == 0x98 or cmd == 0x99:
-            return True
-        return False
-
-    def is_comm_timeout_cmd(self, cmd):
-        if cmd == 0x96:
-            return True
-        return False
-
-    def parse(self, rx, qpt):
-        if rx is not None:
-            rx = bytes(pkt.strip_esc(rx))
-            cmd = rx[self.cmd]
-
-            if self.validate_LRC(rx) is True:
-                if self.is_move_cmd(cmd):
-                    self.update_qpt_status(rx, qpt)
-                elif self.is_angle_correction_cmd(cmd):
-                    self.update_angle_corrections(rx, qpt)
-                elif self.is_soft_limits_cmd(cmd):
-                    self.update_soft_limits(rx, qpt)
-                elif self.is_potentiometer_center_cmd(cmd):
-                    self.update_potentiometer_center(rx, qpt)
-                elif self.is_min_speed_cmd(cmd):
-                    self.update_min_speed(rx, qpt)
-                elif self.is_max_speed_cmd(cmd):
-                    self.update_max_speed(rx, qpt)
-                elif self.is_comm_timeout_cmd(cmd):
-                    self.update_comm_timeout(rx, qpt)
+        qpt.comms_timeout = rx[2]    
+"""End Parser Class"""
 
 
+"""Parser Helper Functions"""
+def is_move_cmd(cmd):
+    if cmd == 0x31 or cmd == 0x33 or cmd == 0x34 or cmd == 0x35:
+        return True
+    return False
 
+def is_angle_correction_cmd(cmd):
+    if cmd == 0x70 or cmd == 0x80 or cmd == 0x82 or cmd == 0x84:
+        return True
+    return False
 
+def is_soft_limits_cmd(cmd):
+    if cmd == 0x71 or cmd == 0x81:
+        return True
+    return False
 
- 
+def is_potentiometer_center_cmd(cmd):
+    if cmd == 0x90 or cmd == 0x91:
+        return True
+    return False
 
+def is_min_speed_cmd(cmd):
+    if cmd == 0x92 or cmd == 0x93:
+        return True
+    return False
 
+def is_max_speed_cmd(cmd):
+    if cmd == 0x98 or cmd == 0x99:
+        return True
+    return False
+
+def is_comm_timeout_cmd(cmd):
+    if cmd == 0x96:
+        return True
+    return False
 
